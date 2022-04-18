@@ -8,7 +8,8 @@ class Forca {
         };
     private:
         //TODO: armazenar os scores?
-       
+        std::vector<std::string> linhas_scores;
+
         std::vector< std::pair<std::string, int> > m_palavras; //<! palavras e sua ocorrência no Corpus
         
         std::string m_arquivo_scores; //<! nome do arquivo contendo os scores
