@@ -1,6 +1,9 @@
 #include <iostream>
 #include <vector>
- 
+
+#ifndef FORCA_HPP
+#define FORCA_HPP
+
 class Forca {
     public:
         enum Dificuldade{
@@ -24,6 +27,7 @@ class Forca {
         std::string m_palavra_jogada; //<! palavra sendo jogada “atualmente” no formato “_ _ _ ... _ “
         
         int m_tentativas_restantes; //TODO: armazenar tentativas restantes
+        double media_ocorrencias = 0;
    
     public:
         /**
@@ -36,8 +40,7 @@ class Forca {
          * @see eh_valido
          */
         Forca( std::string palavras, std::string scores );
-       
- 
+        
         /**
          * Valida os arquivos de entrada de acordo com as especificações.
          * Ao validar os arquivos, no caso de arquivos inválidos, este método deve retornar a 
@@ -50,7 +53,7 @@ class Forca {
          * Carrega os arquivos de scores e palavras preenchendo **ao menos** a estrutura m_palavras
          */
         void carregar_arquivos();
- 
+
         /**
          * Modifica a dificuldade do jogo.
          * Este método modifica a dificuldade do jogo gerando um novo vetor palavras_do_jogo
@@ -122,4 +125,7 @@ class Forca {
          */
         int get_tentativas_restantes();
 
+        double get_media_ocorrencias();
+
 };
+#endif
