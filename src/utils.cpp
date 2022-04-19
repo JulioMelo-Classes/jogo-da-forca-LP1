@@ -5,12 +5,13 @@ std::vector<std::string> dividirString(std::string &texto, char separador){
     size_t comeco = 0;
     size_t fim = texto.find(separador, comeco);
 
-    while(fim!= std::string::npos){ // Enquanto encontrar o caractere separador na string.
+    while(fim !=std::string::npos){ // Enquanto encontrar o caractere separador na string.
         partes.push_back(texto.substr(comeco, fim-comeco));
         comeco = fim+1;
 
         fim = texto.find(separador, comeco);
     }
+    partes.push_back(texto.substr(comeco));
 
     return partes;
 }

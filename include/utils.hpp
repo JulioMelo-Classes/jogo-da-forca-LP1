@@ -9,7 +9,7 @@
  * @param separador caractere que será considerado para separar as partes da string
  * @return Um std::vector de strings com as partes da string separada 
  */
-std::vector<std::string> dividirString(std::string &texto, char separador);
+std::vector<std::string> dividir_string(std::string &texto, char separador);
 
 /**
  * @brief Verifica se uma string possui algum caractere que não está entre a e z (Maiúsculo ou minúsculo).
