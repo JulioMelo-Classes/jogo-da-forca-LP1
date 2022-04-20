@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-std::vector<std::string> dividirString(std::string &texto, char separador){
+std::vector<std::string> dividir_string(std::string &texto, char separador){
     std::vector<std::string> partes = {};
     size_t comeco = 0;
     size_t fim = texto.find(separador, comeco);
