@@ -54,8 +54,9 @@ void Forca::carregar_arquivos(){
     if(score_stream.is_open()){
         getline(score_stream, linha);
         while(linha!="\n" and !score_stream.eof()){
-            std::cout << linha << std::endl;
             this->linhas_scores.push_back(linha);
+
+            getline(score_stream, linha);
         }
         score_stream.close();
     }else{
@@ -72,16 +73,16 @@ std::pair<bool, std::string> Forca::eh_valido(){
     size_t quant_palavras = this->m_palavras.size();
 
     for(std::pair<std::string, int> par: this->m_palavras){ // Percorre o vetor com as palavras e ocorrências
+
         if(par.first.compare("file_not_found")==0 and par.second==-1){ // Arquivo não encontrado
             mensagem = "Arquivo '" + this->m_arquivo_palavras + "' não encontrado!";
             return std::make_pair(false, mensagem); 
-        }if(tem_caractere_especial(par.first)){// Se a palavra tem algum caractere especial
-            mensagem = "A palavra '"+par.first+"' na linha " + std::to_string(numero_da_linha) + " possui algum caracter especial.";
-            return std::make_pair(false, mensagem);
-        if(par.first.compare("invalid_format")==0 and par.second<0){ // Se a linha possui o formato inválido
+        }if(par.first.compare("invalid_format")==0 and par.second<0){ // Se a linha possui o formato inválido
             mensagem = "A linha " + std::to_string(numero_da_linha) + " não está com a formatação correta!";
             return std::make_pair(false, mensagem);
-        }
+        }if(tem_caractere_especial(par.first)){// Se a palavra tem algum caractere especial
+            mensagem = "A palavra '"+par.first+"' na linha " + std::to_string(numero_da_linha) + " possui algum caracter especial (Espaço, @ etc).";
+            return std::make_pair(false, mensagem);
         }if(par.second<0){ // Ocorrências negativas ou não possui ocorrências correspondentes
             mensagem = "A palavra '"+par.first+"' na linha "+std::to_string(numero_da_linha)+" possui uma frequência correspondente inválida!";
             return std::make_pair(false, mensagem);
@@ -94,7 +95,8 @@ std::pair<bool, std::string> Forca::eh_valido(){
         this->media_ocorrencias += ((double) par.second)/quant_palavras;
     }
 
-    numero_da_linha = 1;
+    numero_da_linha = 1; // Reinicia a contagem da linha
+
     for(std::string linha: this->linhas_scores){ // Percorre as linhas dos scores
         const std::vector<std::string> partes = dividir_string(linha,';');
         
@@ -112,14 +114,14 @@ std::pair<bool, std::string> Forca::eh_valido(){
         const std::string dificuldade = partes[0];
         const std::string nome = partes[1].substr(1); // Inicia do índice 1 para eliminar o " "
         const std::string pontuacao = partes[3].substr(1);
-
+        
         if(!pode_ser_int(pontuacao)){
             mensagem = "A pontuação não é um número inteiro na linha "+std::to_string(numero_da_linha);
             return std::make_pair(false, mensagem);
-        }if(dificuldade.empty() or nome.empty()){
+        }if(dificuldade.empty() or nome.empty()){ // Se o nome ou a dificuldade estão vazios
             mensagem = "Algum dos campos (Nome ou dificuldade) estão vazios na linha " + std::to_string(numero_da_linha);
+            return std::make_pair(false, mensagem);
         }
-
 
         numero_da_linha++;
     }
