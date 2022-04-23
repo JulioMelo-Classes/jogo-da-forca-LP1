@@ -125,7 +125,19 @@ class Forca {
          */
         int get_tentativas_restantes();
 
+        /**
+         * @brief Obter a média de ocorrências das palavras
+         * 
+         * @return Um double referente a média de ocorrências das palavras 
+         */
         double get_media_ocorrencias();
+
+        /**
+         * @brief Obter as linhas lidas no arquivo de scores
+         * 
+         * @return Um std::vector de strings com as linhas armazenadas do arquivo de scores
+         */
+        std::vector<std::string> get_linhas_scores();
 
 };
 #endif

@@ -129,3 +129,13 @@ std::pair<bool, std::string> Forca::eh_valido(){
     return std::make_pair(true, ""); 
 }
 
+// ------------------------------------------------ Getters ---------------------------------------------------------------------
+
+double Forca::get_media_ocorrencias(){
+    return this->media_ocorrencias;
+}
+
+std::vector<std::string> Forca::get_linhas_scores(){
+    return this->linhas_scores;
+}
+

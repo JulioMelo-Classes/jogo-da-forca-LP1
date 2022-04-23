@@ -1,9 +1,26 @@
 #include "utils.hpp"
 
+size_t tamanho_maior_string(std::vector<std::string> strings){
+    size_t maiorTamanho = (strings.size()>0)?strings[0].length():0;
+
+    for(size_t i=1; i<strings.size();i++){
+        const size_t tamanho = strings[i].length();
+
+        if(tamanho > maiorTamanho)
+            maiorTamanho = tamanho;
+            
+    }
+
+    return maiorTamanho;
+}
+
 std::vector<std::string> dividir_string(std::string &texto, char separador){
     std::vector<std::string> partes = {};
     size_t comeco = 0;
     size_t fim = texto.find(separador, comeco);
+
+    if(texto.compare("")==0)
+        return partes;
 
     while(fim !=std::string::npos){ // Enquanto encontrar o caractere separador na string.
         partes.push_back(texto.substr(comeco, fim-comeco));

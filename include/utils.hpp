@@ -3,6 +3,14 @@
 #include <iostream>
 
 /**
+ * @brief Calcula o tamanho da maior string de uma lista
+ * 
+ * @param strings Uma lista com as strings
+ * @return size_t O tamanho da maior string
+ */
+size_t tamanho_maior_string(std::vector<std::string> strings);
+
+/**
  * Divide uma string com base em um caractere separador.
  * 
  * @param texto string que será dividida 
