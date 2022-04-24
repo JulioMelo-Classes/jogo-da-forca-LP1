@@ -33,7 +33,7 @@ std::vector<std::string> dividir_string(std::string &texto, char separador){
     return partes;
 }
 
-bool tem_caractere_especial(std::string &texto){
+bool tem_caractere_especial(const std::string &texto){
     for(size_t i=0;i<texto.size();i++){
         const bool entre_a_z = texto[i]>='a' and texto[i]<='z';
         const bool entre_A_Z = texto[i]>='A' and texto[i]<='Z';

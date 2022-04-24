@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+
 /**
  * @brief Obter as palavras acertadas do score
  * 
@@ -32,3 +33,18 @@ std::string get_string_espacos(size_t tamanhoString);
  * @param opcoes Um vetor de pares em que o primeiro elemento de cada par corresponde a palavra e o segundo o tamanho da coluna
  */
 void imprimir_linha(std::vector<std::pair<std::string, size_t>> &opcoes);
+
+
+/**
+ * @brief Imprime uma linha divisória da tabela
+ * 
+ * @param tamanhosColunas um std::vector<size_t> com o tamanho de cada coluna ser impressa
+ */
+void imprimir_linha_divisoria(const std::vector<size_t> &tamanhosColunas);
+
+/**
+ * @brief Imprime a tabela de scores com base
+ * 
+ * @param scores Um std::vector de strings que armazena as linhas lidas no arquivo de scores
+ */
+void imprimir_tabela_scores(std::vector<std::string> scores);

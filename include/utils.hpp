@@ -25,7 +25,7 @@ std::vector<std::string> dividir_string(std::string &texto, char separador);
  * @param texto String a ser verificada
  * @return true se a string possui algum caractere que não esteja entre a e z (Ou A e Z) e false caso contrário.
  */
-bool tem_caractere_especial(std::string &texto);
+bool tem_caractere_especial(const std::string &texto);
 
 /**
  * @brief Verifica se uma determinada string pode ser convertida em inteiro.
