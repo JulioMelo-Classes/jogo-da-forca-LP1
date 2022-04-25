@@ -3,6 +3,7 @@
 
 #include "Forca.hpp"
 #include "utils.hpp"
+#include <random>
 
 Forca::Forca(std::string palavras, std::string scores){
     this->m_arquivo_palavras = palavras;
@@ -127,6 +128,106 @@ std::pair<bool, std::string> Forca::eh_valido(){
     }
     
     return std::make_pair(true, ""); 
+}
+
+void Forca::carregar_palavras_base(){
+
+    for(auto par: this->m_palavras){
+        const std::string palavra = par.first;
+        const int ocorrencias = par.second;
+
+        if(ocorrencias>=this->media_ocorrencias){
+            this->palavras_populares.push_back(palavra);
+            
+            if(ocorrencias==this->media_ocorrencias)
+                this->palavras_na_media.push_back(palavra);
+
+            continue;
+        }
+            
+        palavras_nao_populares.push_back(palavra);
+    }
+}
+
+void Forca::set_dificuldade(Forca::Dificuldade d){
+    this->m_palavras_do_jogo = {}; // Reinicia as palavras do jogo
+
+    switch(d){
+        case Forca::Dificuldade::FACIL: // Dificuldade fácil escolhida
+
+            while(this->m_palavras_do_jogo.size()<10){ // Enquanto não forem sorteadas 10 palavras
+                std::random_device rd;
+                std::default_random_engine eng(rd());
+                std::uniform_int_distribution<int> distr(0, this->palavras_populares.size()-1);
+                
+                const int indice_gerado = distr(eng); // Numero gerado entre 0 e a quantidade de palavras
+                std::string palavra = this->palavras_populares[indice_gerado];
+            
+                const bool eh_igual_a_media = esta_no_vetor(palavra ,palavras_na_media);
+                const bool foi_sorteada = esta_no_vetor(palavra, this->m_palavras_do_jogo);
+
+                if(!eh_igual_a_media and !foi_sorteada)
+                    this->m_palavras_do_jogo.push_back(palavra);
+                    
+            }
+
+            break;
+        case Forca::Dificuldade::MEDIO: // Dificuldade médio escolhida
+            while(this->m_palavras_do_jogo.size()<6){ // Gera as 6 palavras com frequência menor do que a média
+                std::random_device rd;
+                std::default_random_engine eng(rd());
+                std::uniform_int_distribution<int> distr(0, this->palavras_nao_populares.size()-1);
+                
+                const int indice_gerado = distr(eng);
+                std::string palavra = this->palavras_nao_populares[indice_gerado];
+                const bool foi_sorteada = esta_no_vetor(palavra, this->m_palavras_do_jogo);
+
+                if(!foi_sorteada)
+                    this->m_palavras_do_jogo.push_back(palavra);
+            }
+
+            while(this->m_palavras_do_jogo.size()<20){
+                std::random_device rd;
+                std::default_random_engine eng(rd());
+                std::uniform_int_distribution<int> distr(0, this->palavras_populares.size()-1);
+
+                const int indice_gerado = distr(eng);
+                std::string palavra = this->palavras_populares[indice_gerado];
+                const bool foi_sorteada = esta_no_vetor(palavra, this->m_palavras_do_jogo);
+
+                if(!foi_sorteada)
+                    this->m_palavras_do_jogo.push_back(palavra);
+            }
+
+            break;
+        
+        case Forca::Dificuldade::DIFICIL: // Dificuldade difícil escolhida
+            while(this->m_palavras_do_jogo.size()<22){
+                std::random_device rd;
+                std::default_random_engine eng(rd());
+                std::uniform_int_distribution<int> distr(0, this->palavras_nao_populares.size()-1);
+
+                const int indice_gerado = distr(eng);
+                std::string palavra = this->palavras_nao_populares[indice_gerado];
+                const bool foi_sorteada = esta_no_vetor(palavra, this->m_palavras_do_jogo);
+
+                if(!foi_sorteada)
+                    this->m_palavras_do_jogo.push_back(palavra);
+            }
+            
+            while(this->m_palavras_do_jogo.size()<30){
+                std::random_device rd;
+                std::default_random_engine eng(rd());
+                std::uniform_int_distribution<int> distr(0, this->palavras_populares.size()-1);
+
+                const int indice_gerado = distr(eng);
+                std::string palavra = this->palavras_populares[indice_gerado];
+                const bool foi_sorteada = esta_no_vetor(palavra, this->m_palavras_do_jogo);
+
+                if(!foi_sorteada)
+                    this->m_palavras_do_jogo.push_back(palavra);
+            }
+    }
 }
 
 // ------------------------------------------------ Getters ---------------------------------------------------------------------

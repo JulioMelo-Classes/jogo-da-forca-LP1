@@ -10,10 +10,15 @@ class Forca {
             FACIL, MEDIO, DIFICIL
         };
     private:
-        //TODO: armazenar os scores?
-        std::vector<std::string> linhas_scores;
+        std::vector<std::string> linhas_scores; //<! Linhas lidas no arquivo de scores
 
         std::vector< std::pair<std::string, int> > m_palavras; //<! palavras e sua ocorrência no Corpus
+
+        std::vector<std::string> palavras_populares;//<! Palavras cuja frequência de aparição é maior do que a média
+
+        std::vector<std::string> palavras_na_media; //<! Palavras cuja frequência de aparição é igual a média
+
+        std::vector<std::string> palavras_nao_populares;//<! Palavras cuja frequência de aparição é menoor do que a média
         
         std::string m_arquivo_scores; //<! nome do arquivo contendo os scores
  
@@ -53,6 +58,13 @@ class Forca {
          * Carrega os arquivos de scores e palavras preenchendo **ao menos** a estrutura m_palavras
          */
         void carregar_arquivos();
+
+        /**
+         * @brief Processa quais palavras tem a frequência maior do que a média e quais não e alimenta palavras_populares, palavras
+         * _nao_populares e palavras_na_media
+         * 
+         */
+        void carregar_palavras_base();
 
         /**
          * Modifica a dificuldade do jogo.

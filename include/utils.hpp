@@ -2,6 +2,23 @@
 #include <string>
 #include <iostream>
 
+template <typename Type>
+/**
+ * @brief Verifica se um determinado elemento está em um vetor específico
+ * 
+ * @param elemento O elemento que que será buscado no vetor
+ * @param vetor O vetor que servirá como base para a busca
+ * @return true se o elemento está no vetor e false caso contrário
+ */
+bool esta_no_vetor(Type elemento, std::vector<Type> vetor){
+    for(size_t i=0;i<vetor.size();i++){
+        if(elemento == vetor[i])
+            return true;
+    }
+    
+    return false;
+}
+
 /**
  * @brief Calcula o tamanho da maior string de uma lista
  * 
