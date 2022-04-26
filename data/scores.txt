@@ -1,0 +1,3 @@
+Fácil; Julio; CARRO, CART, CORACAO; 10
+Difícil; Isaac; ; -4
+Médio; Ramon; PROFESSOR, CASA, DISCORD; 60
