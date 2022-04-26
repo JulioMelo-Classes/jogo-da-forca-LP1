@@ -230,6 +230,20 @@ void Forca::set_dificuldade(Forca::Dificuldade d){
     }
 }
 
+std::string Forca::proxima_palavra(){
+    std::random_device rd;
+    std::default_random_engine eng(rd());
+    std::uniform_int_distribution<int> distr(0, this->m_palavras_do_jogo.size()-1);
+
+    const int indice_gerado = distr(eng);
+    std::string palavra_maiusculo = to_upper_case(this->m_palavras_do_jogo[indice_gerado]);
+    this->m_palavra_atual = palavra_maiusculo;
+    apagar_por_indice(indice_gerado, this->m_palavras_do_jogo);
+    this->m_palavra_jogada = palavra_formato_secreto(palavra_maiusculo);
+
+    return this->m_palavra_jogada;
+}
+
 // ------------------------------------------------ Getters ---------------------------------------------------------------------
 
 double Forca::get_media_ocorrencias(){

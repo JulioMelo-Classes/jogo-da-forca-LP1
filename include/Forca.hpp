@@ -150,6 +150,6 @@ class Forca {
          * @return Um std::vector de strings com as linhas armazenadas do arquivo de scores
          */
         std::vector<std::string> get_linhas_scores();
-
+        
 };
 #endif

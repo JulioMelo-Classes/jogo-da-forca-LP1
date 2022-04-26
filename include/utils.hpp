@@ -19,6 +19,19 @@ bool esta_no_vetor(Type elemento, std::vector<Type> vetor){
     return false;
 }
 
+template <typename Type>
+/**
+ * @brief Apaga um elemento de um vetor apartir do índice
+ * 
+ * @param indice O índice do elemento que pretende remover do vetor
+ * @param vetor vetor do qual deseja apagar o elemento
+ */
+void apagar_por_indice(int indice, std::vector<Type> &vetor){
+    auto iterator = vetor.begin();
+
+    vetor.erase(iterator+indice);
+}
+
 /**
  * @brief Calcula o tamanho da maior string de uma lista
  * 
@@ -26,6 +39,22 @@ bool esta_no_vetor(Type elemento, std::vector<Type> vetor){
  * @return size_t O tamanho da maior string
  */
 size_t tamanho_maior_string(std::vector<std::string> strings);
+
+/**
+ * @brief Deixar em maiúsculo uma string sem acentos.
+ * 
+ * @param texto string a ser convertida
+ * @return a string passada convertida para maiúsculo
+ */
+std::string to_upper_case(std::string texto);
+
+/**
+ * @brief Gera uma palavra no formato "_ _ _ ... _" a partir de outra palavra
+ * 
+ * @param palavra Palavra a ser convertida no formato
+ * @return Uma std::string no formato "_ _ _ ... _"
+ */
+std::string palavra_formato_secreto(std::string palavra);
 
 /**
  * Divide uma string com base em um caractere separador.

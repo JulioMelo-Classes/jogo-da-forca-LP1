@@ -14,6 +14,31 @@ size_t tamanho_maior_string(std::vector<std::string> strings){
     return maiorTamanho;
 }
 
+std::string to_upper_case(std::string texto){
+    std::string maiusculo = "";
+
+    
+    for(size_t i=0; i<texto.length();i++){
+        maiusculo += toupper(texto[i]);
+    }
+
+    return maiusculo;
+}
+
+std::string palavra_formato_secreto(std::string palavra){
+    std::string separador = " ";
+    std::string secreta = "";
+
+    for(size_t i=0; i<palavra.length();i++){
+        if(i==palavra.length()-1)
+            separador = "";
+        
+        secreta+="_"+separador;
+    }
+
+    return secreta;
+}
+
 std::vector<std::string> dividir_string(std::string &texto, char separador){
     std::vector<std::string> partes = {};
     size_t comeco = 0;
