@@ -10,4 +10,6 @@ set( APP_NAME "forca" )
 add_executable( ${APP_NAME}
                 src/main.cpp
                 src/Forca.cpp
-                src/utils.cpp)
+                src/utils.cpp
+                src/tabelas.cpp)
+
