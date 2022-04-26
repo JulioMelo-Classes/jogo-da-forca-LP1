@@ -27,11 +27,11 @@ class Forca {
         Dificuldade m_dificuldade = Dificuldade::FACIL; //<! dificuldade atual do jogo
  
         std::vector< std::string > m_palavras_do_jogo; //<! container “Palavras do Jogo”
-        std::vector< char > m_letras_palpitadas; //<! contem as letras palpitadas pelo jogador
+        std::vector< char > m_letras_palpitadas = {}; //<! contem as letras palpitadas pelo jogador
         std::string m_palavra_atual; //<! palavra sendo jogada “atualmente”
         std::string m_palavra_jogada; //<! palavra sendo jogada “atualmente” no formato “_ _ _ ... _ “
         
-        int m_tentativas_restantes; //TODO: armazenar tentativas restantes
+        int m_tentativas_restantes = 5; //TODO: armazenar tentativas restantes
         double media_ocorrencias = 0;
    
     public:
@@ -115,6 +115,13 @@ class Forca {
          *         {T,F} ou {F,F} no caso do palpite pertencer/não pertencer à palavra, mas não é novo.
          */
         std::pair<bool, bool> palpite(std::string palpite);
+
+        /**
+         * @brief Verifica se o jogador acertou a palavra
+         * 
+         * @return true se o jogador acertou a palavra, false caso contrário
+         */
+        bool acertou_palavra();
  
         /**
          * Em caso de Game Over ou do jogador ter acertado a palavra este método deve retornar T.

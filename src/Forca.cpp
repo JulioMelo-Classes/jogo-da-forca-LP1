@@ -244,6 +244,56 @@ std::string Forca::proxima_palavra(){
     return this->m_palavra_jogada;
 }
 
+std::pair<bool, bool> Forca::palpite(std::string palpite){
+    const char letra_palpite = toupper(palpite.at(0)); // A letra será a primeira letra da string em maiúsculo
+    const bool foi_palpitada = esta_no_vetor(letra_palpite, this->m_letras_palpitadas);
+
+    if(!foi_palpitada){
+        unsigned int aparicoes_da_letra = 0;
+
+        for(size_t l=0;l < this->m_palavra_atual.length();l++){
+            if(letra_palpite==this->m_palavra_atual[l]){
+                this->m_palavra_jogada[l*2] = letra_palpite;
+                aparicoes_da_letra++;
+            }
+        }
+
+        if(aparicoes_da_letra>0)
+            return std::make_pair(true, true); // Pertence a palavra e é um palpite novo
+
+        this->m_tentativas_restantes-=1;
+        return std::make_pair(false, true); // Não pertence a palavra mas é um palpite novo
+    }
+
+    return std::make_pair(false, false);
+}
+
+bool Forca::acertou_palavra(){
+    for(size_t l=0;l<this->m_palavra_jogada.length();l+=2){ // Pula de 2 em 2 índices pois os índices ímpares são só underlines
+        if(this->m_palavra_jogada.at(l) == '_'){ // Se ainda tiver alguma letra não encontrada
+            return false;
+        }  
+    }
+
+    return (this->m_palavra_jogada.length()>0)?true:false;
+}
+
+bool Forca::rodada_terminada(){
+    bool const tentativas_acabadas = this->m_tentativas_restantes == 0;
+    const bool palavra_acertada = this->acertou_palavra();
+
+    if(tentativas_acabadas or palavra_acertada) // Se acabaram as tentativas ou a palavra foi acertada
+        return true;
+    
+    return false;
+}
+
+void Forca::reset_rodada(){
+    this->m_tentativas_restantes = 5;
+    this->m_letras_palpitadas = {};
+}
+
+
 // ------------------------------------------------ Getters ---------------------------------------------------------------------
 
 double Forca::get_media_ocorrencias(){
@@ -254,3 +304,14 @@ std::vector<std::string> Forca::get_linhas_scores(){
     return this->linhas_scores;
 }
 
+std::string Forca::get_palavra_jogada(){
+    return this->m_palavra_jogada;
+}
+
+std::string Forca::get_palavra_atual(){
+    return this->m_palavra_atual;
+}
+
+int Forca::get_tentativas_restantes(){
+    return this->m_tentativas_restantes;
+}
