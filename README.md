@@ -1,6 +1,24 @@
 # Jogo da Forca com Interface Textual
 Repositório contendo as especificações do Trabalho 1 da disciplina de LP1
 
+# Avaliação e Feeback
+
+- Implementação do carregamento dos arquivos |  10 / 10 pontos
+    - Vou considerar mas você precisa deixar claro no readme que o arquivo de palavras precisa separar o número com \t.
+
+- Implementação de parte da validação | 10 / 10 pontos
+
+- Implementação de um main funcional com parte da UI | 5 / 5 pontos
+
+- Implementação de parte da lógica de sorteio de palavras | 10 / 10 pontos
+    - Muito boa usar a função uniform_distribution, você também poderia usar algo parecido para embaralhar o vetor de palavras e apenas pegar os
+    primeiros elementos!
+
+- Estrutura básica dos arquivos e processo de compilação definido | 5 / 5 pontos
+
+- Observações gerais
+    - Muito boa a modularicação!
+
 # Documento de Especificação
 
 Leia o documento de especificação contido em [Especificação do Trabalho 1](https://docs.google.com/document/d/1aa51VNLQ_jpZaEuGkMz2KE8feAkE48-TENZ9eqn48nk/edit?usp=sharing).
