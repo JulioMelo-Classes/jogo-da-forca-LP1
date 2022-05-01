@@ -250,17 +250,20 @@ std::pair<bool, bool> Forca::palpite(std::string palpite){
 
     if(!foi_palpitada){
         unsigned int aparicoes_da_letra = 0;
+        this->m_letras_palpitadas.push_back(letra_palpite); // Adiciona o palpite no vetor de letras palpitadas
 
         for(size_t l=0;l < this->m_palavra_atual.length();l++){
             if(letra_palpite==this->m_palavra_atual[l]){
                 this->m_palavra_jogada[l*2] = letra_palpite;
                 aparicoes_da_letra++;
+                this->pontos_jogador += 1; // Incrementa em 1 os pontos do jogador
             }
         }
 
         if(aparicoes_da_letra>0)
             return std::make_pair(true, true); // Pertence a palavra e é um palpite novo
 
+        this->pontos_jogador -=1; // Tira 1 ponto do jogador
         this->m_tentativas_restantes-=1;
         return std::make_pair(false, true); // Não pertence a palavra mas é um palpite novo
     }
@@ -289,10 +292,13 @@ bool Forca::rodada_terminada(){
 }
 
 void Forca::reset_rodada(){
-    this->m_tentativas_restantes = 5;
+    this->m_tentativas_restantes = 6;
     this->m_letras_palpitadas = {};
 }
 
+void Forca::add_linha_score(std::string linha){
+    this->linhas_scores.push_back(linha);
+}
 
 // ------------------------------------------------ Getters ---------------------------------------------------------------------
 
@@ -312,6 +318,11 @@ std::string Forca::get_palavra_atual(){
     return this->m_palavra_atual;
 }
 
+std::vector<std::string> Forca::get_palavras_do_jogo(){
+    return this->m_palavras_do_jogo;
+}
+
 int Forca::get_tentativas_restantes(){
     return this->m_tentativas_restantes;
 }
+

@@ -9,6 +9,7 @@ class Forca {
         enum Dificuldade{
             FACIL, MEDIO, DIFICIL
         };
+        int pontos_jogador = 0;
     private:
         std::vector<std::string> linhas_scores; //<! Linhas lidas no arquivo de scores
 
@@ -31,8 +32,9 @@ class Forca {
         std::string m_palavra_atual; //<! palavra sendo jogada “atualmente”
         std::string m_palavra_jogada; //<! palavra sendo jogada “atualmente” no formato “_ _ _ ... _ “
         
-        int m_tentativas_restantes = 5; //TODO: armazenar tentativas restantes
+        int m_tentativas_restantes = 6; //TODO: armazenar tentativas restantes
         double media_ocorrencias = 0;
+
    
     public:
         /**
@@ -142,6 +144,9 @@ class Forca {
          * Retorna a quantidade de tentativas restantes.
          * @return a quantidade de tentativas restantes.
          */
+
+        void add_linha_score(std::string linha);
+
         int get_tentativas_restantes();
 
         /**
@@ -157,6 +162,8 @@ class Forca {
          * @return Um std::vector de strings com as linhas armazenadas do arquivo de scores
          */
         std::vector<std::string> get_linhas_scores();
+
+        std::vector<std::string> get_palavras_do_jogo();
         
 };
 #endif

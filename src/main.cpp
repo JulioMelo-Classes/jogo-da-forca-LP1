@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Forca.hpp"
 #include "tabelas.hpp"
+#include <fstream>
 
 /**
  * @brief Imprime uma confirmação de que os arquivos foram lidos sem problemas
@@ -52,20 +53,102 @@ Forca::Dificuldade exibe_menu_dificuldades(){
 
 std::string nome_da_dificuldade(Forca::Dificuldade d){
     switch(d){
-        case Forca::Dificuldade::FACIL: return "fácil";
-        case Forca::Dificuldade::MEDIO: return "médio";
-        case Forca::Dificuldade::DIFICIL: return "difícil";
+        case Forca::Dificuldade::FACIL: return "Fácil";
+        case Forca::Dificuldade::MEDIO: return "Médio";
+        case Forca::Dificuldade::DIFICIL: return "Difícil";
     }
 
     return "<dificuldade_não_reconhecida>";
 }
 
+std::string str_palavras_acertadas(std::vector<std::string> palavras_acertadas){
+    std::string str_palavras = "";
+    std::string separador = ",";
+
+    for(size_t i=0;i<palavras_acertadas.size();i++){
+        if(i==palavras_acertadas.size()-1) // Se for a última palavra
+            separador = "";
+        
+        str_palavras+=" " + palavras_acertadas[i] + separador;
+    }
+
+    return (palavras_acertadas.size()!=0)?str_palavras:" ";
+}
+
+/**
+ * @brief Atualiza o arquivo de scores com base nas informações
+ * 
+ * @param dificuldade Dificuldade do jogo em string (Fácil, Médio ou Difícil)
+ * @param palavras_acertadas Um vetor de strings com as palavras acertadas pelo jogador
+ * @param pontos Pontos obtidos pelo jogador
+ */
+void atualizar_score(Forca &forca, std::string dificuldade, std::vector<std::string> palavras_acertadas, int pontos, std::string arquivo_scores){
+    std::ofstream score_stream(arquivo_scores, std::ios::app);
+
+    std::string str_palavras = str_palavras_acertadas(palavras_acertadas);
+    std::string jogador;
+
+    std::cout << "Informe o nome do jogador: " << std::endl;
+    std::cin.ignore();
+
+    std::getline(std::cin, jogador);
+
+    std::string linha_score = dificuldade + "; " + jogador + ";" + str_palavras + "; " + std::to_string(pontos);
+
+    score_stream << linha_score << std::endl; // Adiciona a linha no arquivo score
+    forca.add_linha_score(linha_score); // Adiciona a linha no vetor de linhas da forca
+
+    score_stream.close();
+}
+
+/**
+ * @brief Desenha a figura do boneco da forca com base na quantidade de erros
+ * 
+ * @param qntErros A quantidade de erros do usuário
+ */
+void desenhar_forca(int qntErros){
+    switch(qntErros){
+        case 0: 
+            std::cout << "\n\n\n\n";
+            break;
+        case 1:
+            std::cout << " o" << std::endl;
+            std::cout << "\n\n\n";
+            break;
+        case 2:
+            std::cout << " o" << std::endl;
+            std::cout << " |" << std::endl;
+            std::cout << "\n\n";
+            break;
+        case 3:
+            std::cout << " o" << std::endl;
+            std::cout << "/|" << std::endl;
+            break;
+        case 4:
+            std::cout << " o" << std::endl;
+            std::cout << "/|\\" << std::endl;
+            break;
+        case 5:
+            std::cout << " o" << std::endl;
+            std::cout << "/|\\" << std::endl;
+            std::cout << "/" << std::endl;
+            std::cout << "\n";
+            break;
+        case 6:
+            std::cout << " o" << std::endl;
+            std::cout << "/|\\" << std::endl;
+            std::cout << "/ \\" << std::endl;
+            std::cout << "\n";
+            break;
+    }
+}
+
 void exibe_interface_jogo(Forca &forca,std::string mensagem){
     std::cout << "-----------------------------------------------------------" << std::endl;
     std::cout << mensagem << std::endl;
-    std::cout << "\n\n";
-    std::cout << "Tentativas restantes: " << forca.get_tentativas_restantes() << std::endl;
+    desenhar_forca(6 - forca.get_tentativas_restantes());
     std::cout << forca.get_palavra_jogada() << std::endl << std::endl;
+    std::cout << "Pontos: " << forca.pontos_jogador << std::endl;
 }
 
 unsigned int exibe_parar_continuar(){
@@ -104,7 +187,9 @@ int main(int argc, char *argv[]){
             forca.carregar_palavras_base();
             forca.set_dificuldade(d);
 
-            while(true){ //
+            std::vector<std::string> palavras_acertadas = {};
+
+            while(true){
                 string p = forca.proxima_palavra();
                 forca.reset_rodada();
 
@@ -135,19 +220,36 @@ int main(int argc, char *argv[]){
                     }
 
                 }
+
                 if(forca.acertou_palavra()){ // Se o jogador acertou a palavra
                     /*imprime interface de continuar / parar*/
-                    std::cout << "Parabéns! Você acertou, a palavra era"<< forca.get_palavra_atual() << std::endl;
+                    forca.pontos_jogador +=2;
+
+                    std::cout << "Parabéns! Você acertou, a palavra era "<< forca.get_palavra_atual() << std::endl;
+                    std::cout << "Pontos" << forca.pontos_jogador << std::endl;
+                    palavras_acertadas.push_back(forca.get_palavra_atual());    
+
                     const unsigned int opcao = exibe_parar_continuar();
 
-                    if (opcao!=1) // Se não escolheu continuar
+                    if (opcao!=1){ // Se não escolheu continuar
+                        atualizar_score(forca, nome_da_dificuldade(d), palavras_acertadas, forca.pontos_jogador, argv[2]);
                         break;
-                    else
+                    }
+                    else{
                         forca.reset_rodada();
+
+                        if(forca.get_palavras_do_jogo().size()==0){ // Se o usuário acertar todas as palavras sorteadas inicialmente
+                            forca.carregar_palavras_base();
+                            forca.set_dificuldade(d);
+                        }
+
+                    }
                 }
                 else{ /*perdeu*/
                     /*imprime gameover e a palavra que estava sendo jogada*/
                     std::cout << "Game Over! A palavra era " << forca.get_palavra_atual() << "!\n";
+                    atualizar_score(forca, nome_da_dificuldade(d),palavras_acertadas, forca.pontos_jogador, argv[2]);
+                    forca.pontos_jogador = 0;
                     break;
                 }
             }

@@ -63,7 +63,7 @@ bool tem_caractere_especial(const std::string &texto){
         const bool entre_a_z = texto[i]>='a' and texto[i]<='z';
         const bool entre_A_Z = texto[i]>='A' and texto[i]<='Z';
 
-        if(!(entre_a_z or entre_A_Z))
+        if(!(entre_a_z or entre_A_Z) and texto[i]!=' ' and texto[i]!='-')
             return true;
     }
 
