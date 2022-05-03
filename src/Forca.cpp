@@ -82,7 +82,7 @@ std::pair<bool, std::string> Forca::eh_valido(){
             mensagem = "A linha " + std::to_string(numero_da_linha) + " não está com a formatação correta!";
             return std::make_pair(false, mensagem);
         }if(tem_caractere_especial(par.first)){// Se a palavra tem algum caractere especial
-            mensagem = "A palavra '"+par.first+"' na linha " + std::to_string(numero_da_linha) + " possui algum caracter especial (Espaço, @ etc).";
+            mensagem = "A palavra '"+par.first+"' na linha " + std::to_string(numero_da_linha) + " possui algum caracter especial (ç, @ etc).";
             return std::make_pair(false, mensagem);
         }if(par.second<0){ // Ocorrências negativas ou não possui ocorrências correspondentes
             mensagem = "A palavra '"+par.first+"' na linha "+std::to_string(numero_da_linha)+" possui uma frequência correspondente inválida!";
@@ -117,7 +117,7 @@ std::pair<bool, std::string> Forca::eh_valido(){
         const std::string pontuacao = partes[3].substr(1);
         
         if(!pode_ser_int(pontuacao)){
-            mensagem = "A pontuação não é um número inteiro na linha "+std::to_string(numero_da_linha);
+            mensagem = "A pontuação não é um número inteiro na linha "+std::to_string(numero_da_linha) +" do arquivo de scores";
             return std::make_pair(false, mensagem);
         }if(dificuldade.empty() or nome.empty()){ // Se o nome ou a dificuldade estão vazios
             mensagem = "Algum dos campos (Nome ou dificuldade) estão vazios na linha " + std::to_string(numero_da_linha);
