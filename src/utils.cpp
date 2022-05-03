@@ -39,6 +39,42 @@ std::string palavra_formato_secreto(std::string palavra){
     return secreta;
 }
 
+std::vector<char> get_consoantes(std::string palavra){
+    std::vector<char> consoantes = {};
+    std::vector<char> vogais = {'A','E','I','O','U'};
+    
+    for(size_t i=0; i< palavra.length();i++){
+        const char caractere = palavra[i];
+
+        const bool e_vogal = esta_no_vetor(caractere, vogais);
+        const bool esta_na_lista = esta_no_vetor(caractere, consoantes);
+
+        if(!e_vogal and !esta_na_lista)
+            consoantes.push_back(caractere);
+
+    }
+
+    return consoantes;
+}
+
+std::vector<char> get_vogais(std::string palavra){
+    std::vector<char> vogais_da_palavra = {};
+    std::vector<char> vogais = {'A','E','I','O','U'};
+
+    for(size_t i=0; i< palavra.length();i++){
+        const char caractere = palavra[i];
+
+        const bool e_vogal = esta_no_vetor(caractere, vogais);
+        const bool esta_na_lista = esta_no_vetor(caractere, vogais_da_palavra);
+
+        if(e_vogal and !esta_na_lista)
+            vogais_da_palavra.push_back(caractere);
+
+    }
+
+    return vogais_da_palavra;
+}
+
 std::vector<std::string> dividir_string(std::string &texto, char separador){
     std::vector<std::string> partes = {};
     size_t comeco = 0;

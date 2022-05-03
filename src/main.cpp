@@ -123,10 +123,12 @@ void desenhar_forca(int qntErros){
         case 3:
             std::cout << " o" << std::endl;
             std::cout << "/|" << std::endl;
+            std::cout << "\n\n";
             break;
         case 4:
             std::cout << " o" << std::endl;
             std::cout << "/|\\" << std::endl;
+            std::cout << "\n\n";
             break;
         case 5:
             std::cout << " o" << std::endl;
@@ -192,6 +194,7 @@ int main(int argc, char *argv[]){
             while(true){
                 string p = forca.proxima_palavra();
                 forca.reset_rodada();
+                forca.gerar_letras_aleatorias();
 
                 /*exibe interface do jogo*/
                 std::string msg = "Iniciando o Jogo no nível "+nome_da_dificuldade(d)+", será que você conhece essa palavra?";
@@ -226,7 +229,7 @@ int main(int argc, char *argv[]){
                     forca.pontos_jogador +=2;
 
                     std::cout << "Parabéns! Você acertou, a palavra era "<< forca.get_palavra_atual() << std::endl;
-                    std::cout << "Pontos" << forca.pontos_jogador << std::endl;
+                    std::cout << "Pontos: " << forca.pontos_jogador << std::endl;
                     palavras_acertadas.push_back(forca.get_palavra_atual());    
 
                     const unsigned int opcao = exibe_parar_continuar();

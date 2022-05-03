@@ -57,6 +57,22 @@ std::string to_upper_case(std::string texto);
 std::string palavra_formato_secreto(std::string palavra);
 
 /**
+ * @brief Pega as consoantes de uma palavra
+ * 
+ * @param palavra A palavra a ser analisada
+ * @return std::vector<char> Um vetor com as consoantes não repetidas
+ */
+std::vector<char> get_consoantes(std::string palavra);
+
+/**
+ * @brief Pega as vogais de uma palavra
+ * 
+ * @param palavra A palavra a ser analisada
+ * @return std::vector<char>  Um vetor com as vogais não repetidas
+ */
+std::vector<char> get_vogais(std::string palavra);
+
+/**
  * Divide uma string com base em um caractere separador.
  * 
  * @param texto string que será dividida 

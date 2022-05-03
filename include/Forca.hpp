@@ -88,6 +88,12 @@ class Forca {
         std::string proxima_palavra();
  
         /**
+         * @brief Gera letras aleatórias da palavra que está sendo jogada
+         * 
+         */
+        void gerar_letras_aleatorias();
+
+        /**
          * Retorna a palavra atual que está sendo jogada.
          * Diferente do método proxima_palavra(), este método __não atualiza__ o atributo
          * m_palavra_atual, apenas retorna o atributo m_palavra_jogada que é a palavra no

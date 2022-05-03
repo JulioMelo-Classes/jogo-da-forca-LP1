@@ -151,6 +151,7 @@ void Forca::carregar_palavras_base(){
 
 void Forca::set_dificuldade(Forca::Dificuldade d){
     this->m_palavras_do_jogo = {}; // Reinicia as palavras do jogo
+    this->m_dificuldade = d;
 
     switch(d){
         case Forca::Dificuldade::FACIL: // Dificuldade fácil escolhida
@@ -242,6 +243,60 @@ std::string Forca::proxima_palavra(){
     this->m_palavra_jogada = palavra_formato_secreto(palavra_maiusculo);
 
     return this->m_palavra_jogada;
+}
+
+void Forca::gerar_letras_aleatorias(){
+    std::vector<char> letras = {};
+    int qnt_letras_sorteio;
+
+    if(this->m_dificuldade== Forca::Dificuldade::FACIL){
+        letras = get_consoantes(this->m_palavra_atual);
+        int tamanho_sobre_5 = (int) this->m_palavra_atual.length()/5;
+        qnt_letras_sorteio = (tamanho_sobre_5>1)?tamanho_sobre_5:1;
+
+        while(qnt_letras_sorteio>0 and letras.size()>0){
+            std::random_device rd;
+            std::default_random_engine eng(rd());
+            std::uniform_int_distribution<int> distr(0, letras.size()-1);
+
+            const int indice_gerado = distr(eng);
+            const char letra = letras[indice_gerado];
+
+            for(size_t i=0;i<this->m_palavra_atual.length();i++){
+                if(letra == this->m_palavra_atual[i]){
+                    this->m_palavra_jogada[i*2] = toupper(letra);
+                    this->m_letras_palpitadas.push_back(toupper(letra));
+                } 
+
+            }
+
+            apagar_por_indice(indice_gerado, letras); // Apaga a letra gerada do vetor de letras
+            qnt_letras_sorteio-=1; // Decrementa em 1 a quantidade de letras a serem geradas no sorteio
+        }
+    }else if(this->m_dificuldade == Forca::Dificuldade::MEDIO){
+        letras = get_vogais(this->m_palavra_atual);
+        qnt_letras_sorteio = 1;
+
+        if(letras.size()>0){
+            std::random_device rd;
+            std::default_random_engine eng(rd());
+            std::uniform_int_distribution<int> distr(0, letras.size()-1);
+
+            const int indice_gerado = distr(eng);
+            const char letra = letras[indice_gerado];
+
+            for(size_t i=0;i<this->m_palavra_atual.length();i++){
+                if(letra == this->m_palavra_atual[i]){
+                    this->m_palavra_jogada[i*2] = toupper(letra);
+                    this->m_letras_palpitadas.push_back(toupper(letra));
+                }
+            }
+
+            apagar_por_indice(indice_gerado, letras); // Apaga a letra gerada do vetor de letras
+            qnt_letras_sorteio-=1;
+        }
+    }
+
 }
 
 std::pair<bool, bool> Forca::palpite(std::string palpite){
