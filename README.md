@@ -7,7 +7,7 @@ Leia o documento de especificação contido em [Especificação do Trabalho 1](h
 
 
 
-## 1. Como Compilar e Executar o Projeto
+## 1. :hammer_and_wrench: Como Compilar e Executar o Projeto
 
 Para a compilação do projeto é possível utilizar a ferramenta de compilação **cmake** (Caso não possua o cmake precisará instalá-lo). Assim, siga o conjunto de passos:
 
@@ -33,12 +33,139 @@ Agora, um arquivo executável será criado em `/build` com o nome de `forca`. Pa
 ./forca ../data/palavras_forca.txt ../data/scores.txt
 ```
 
-O `../data/palavras_forca.txt`  e `../data/scores.txt` referem-se, respectivamente, ao arquivo de palavras e scores bases utilizados no jogo que estão dentro da pasta  `/data`. 
+O `../data/palavras_forca.txt`  e `../data/scores.txt` referem-se, respectivamente, ao arquivo de palavras e scores bases utilizados no jogo que estão dentro da pasta  `/data`.
 
-## 2. Funcionalidades não implementadas
+## 2. :file_folder: Arquivo de Palavras e de Scores
 
-Para esta versão do jogo ainda não foram implementadas as seguintes funcionalidades básicas: 
+###### O arquivo de palavras (`palavras_forca.txt`) e de scores (`scores.txt`) se encontram dentro da pasta `/data` no diretório raiz do projeto e devem possuir uma formatações específicas.
 
-* Sorteio de consoantes para as palavras ao iniciar o jogo;
-* Contagem de pontos;
-*  Salvamento dos scores no arquivo `score.txt`. 
+### 2.1 `palavras_forca.txt`
+
+O arquivo de palavras possui, em cada linha, uma palavra com a sua respectiva frequência de aparição separadas por um **tab** (tabulação, `\t`). Exemplo fictício:
+
+```
+coracao	16
+sorte 14
+coragem 10
+
+```
+
+As palavras não podem possuir caracteres especiais (ç, @ etc) e devem possuir um tamanho mínimo de 5 letras.
+
+### 2.2 `scores.txt`
+
+O arquivo de scores por sua vez possui em cada linha informações da dificuldade do jogo, nome do jogador, palavras acertadas por ele e pontos obtidos por ele. Todas essas informações são separadas por ponto e vírgula (`;`) e as palavras acertadas são separadas por vírgula (`,`). Exemplo:
+
+```
+Fácil; Hugo Santos; CORACAO, SORTE; 10
+Médio; Maria Silva; CORACAO, SORTE, CORAGEM; 20
+Difícil; Joao Souza; ; 0
+```
+
+
+
+## 3. :exclamation: Testes de Validação de Arquivos
+
+Iremos testar os seguintes casos de validação de arquivos:
+
+* **Palavras**
+  * Arquivo não encontrado;
+  * A linha não está com a formatação correta;
+  * Alguma palavra possui caractere especial;
+  * Alguma palavra não tem a frequência correspondente válida;
+  * Alguma palavra não possui o tamanho mínimo de 5 letras.
+* **Scores**
+  * Arquivo não encontrado;
+  * Presença de mais ou menos 3 pontos e vírgulas (`;`) ;
+  * A pontuação do jogador não é um número inteiro;
+  * Se o campo de nome ou dificuldade estão vazios.
+
+### 3.1 Testes de palavras
+
+Para testar o caso de arquivo não encontrado basta passarmos como argumento um arquivo que não existe. Exemplo
+
+```bash
+ ./forca palavras.txt ../data/scores.txt
+```
+
+**Saída Esperada:** Arquivo 'palavras.txt' não encontrado!
+
+---
+
+Testando o caso de alguma linha não estar com a formatação correta:
+
+```bash
+./forca ../data/palavras_formatacao.txt ../data/scores.txt
+```
+
+**Saída Esperada:** A linha 3 não está com a formatação correta!
+
+---
+
+Caso alguma palavra possua algum caractere especial:
+
+```bash
+./forca ../data/palavras_caractere.txt ../data/scores.txt
+```
+
+**Saída Esperada:** A palavra 'CORAÇÃO' na linha 3 possui algum caracter especial (ç, @ etc).
+
+---
+
+Caso de alguma palavra não ter a frequência correspondente válida:
+
+```bash
+./forca ../data/palavras_frequencia.txt ../data/scores.txt
+```
+
+**Saída Esperada:** A palavra 'ADEUS' na linha 4 possui uma frequência correspondente inválida!
+
+---
+
+Caso de alguma palavra ter tamanho menor do que 5:
+
+```bash
+./forca ../data/palavras_tamanho.txt ../data/scores.txt
+```
+
+**Saída Esperada:** A palavra 'AMOR' na linha 4 possui um tamanho menor do que 5
+
+### 3.2 Teste de scores
+
+Testando o caso de arquivo de scores não encontrado passando um arquivo de scores inexistente:
+
+```bash
+./forca ../data/palavras_forca.txt scores.txt
+```
+
+**Saída Esperada:** Arquivo 'scores.txt' não encontrado
+
+---
+
+Testando arquivos com alguma linha com mais ou menos 3 pontos e vírgulas:
+
+```bash
+./forca ../data/palavras_forca.txt ../data/scores_formatacao.txt
+```
+
+**Saída Esperada:** Presença de mais ou menos 3 ';' na linha 2
+
+---
+
+Testando o caso de ter alguma pontuação sem ser um número inteiro:
+
+```
+./forca ../data/palavras_forca.txt ../data/scores_pontuacao.txt
+```
+
+**Saída Esperada:** A pontuação não é um número inteiro na linha 3 do arquivo de scores
+
+---
+
+Testando o caso do campo nome ou dificuldade vazios:
+
+```bash
+./forca ../data/palavras_forca.txt ../data/scores_vazios.txt
+```
+
+**Saída Esperada:** Algum dos campos (Nome ou dificuldade) estão vazios na linha 3
