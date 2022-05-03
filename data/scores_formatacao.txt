@@ -1,0 +1,4 @@
+Fácil; Hugo Santos; CORACAO, SORTE; 10
+Fácil; ; ; ;
+Médio; Maria Silva; CORACAO, SORTE, CORAGEM; 20
+Difícil; Joao Souza; ; 0
