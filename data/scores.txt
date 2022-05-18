@@ -1,3 +1,7 @@
 Fácil; Julio; CARRO, CART, CORACAO; 10
 Difícil; Isaac; ; -4
 Médio; Ramon; PROFESSOR, CASA, DISCORD; 60
+Fácil; Julio; ; 0
+Médio; Julio melo; ; -5
+Fácil; teste; ; 1
+Fácil; julio cesar; REFRIGERACAO, TIRANIA; 14

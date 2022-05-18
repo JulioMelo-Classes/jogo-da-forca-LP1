@@ -1,6 +1,44 @@
 # Jogo da Forca com Interface Textual
 Repositório contendo as especificações do Trabalho 1 da disciplina de LP1
 
+# Avaliação e Feedback
+
+## Geral
+
+- Implementção da Classe forca ou similar | 10 / 10 pontos
+	- ok
+
+- Implementação da Interface textual | 10 / 10 pontos
+	- ok
+
+- Execução completa do jogo | 15 / 15 pontos
+	- Sorteio correto de paralavras para o jogo: cp1
+	- Configuração correta da palavra jogada, dependendo da dificuldade:  5 / 5 
+	- Execução correta do jogo (não pode repetir palpites, contabilização correta dos pontos e loop): 3 / 3
+	- Salvamento correto do score: 2 / 2
+	- Exibição correta dos scores: 5 / 5
+
+- Validação dos arquivos de texto | 5 / 5 pontos
+	- ok
+
+- Arquivos de teste de validação dos casos de erro | 5 / 5 pontos
+	- ok
+
+## Código
+
+- Documentação do código e readme | 10 / 10 pontos
+	- muito bom o readme!
+
+- Organização e indentação do código | 10 / 10 pontos
+	- ok
+
+- Compilação automatizada | 5 / 5 pontos
+	- ok
+	
+## Comentários
+- Embora você tenha feito várias funções no main, talvez valesse a pena movê-las para seu próprio .h. Na maioria das vezes o main não tem funções a
+menos que tenham a ver com a configuração inicial do programa.
+
 # Documento de Especificação
 
 Leia o documento de especificação contido em [Especificação do Trabalho 1](https://docs.google.com/document/d/1aa51VNLQ_jpZaEuGkMz2KE8feAkE48-TENZ9eqn48nk/edit?usp=sharing).
